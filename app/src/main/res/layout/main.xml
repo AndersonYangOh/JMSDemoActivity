@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:andorid="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.kaazing.gateway.jms.client.demo.JMSDemoActivity"
+    android:background="@color/colorBackground">
+
+
+
+<!--
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/location_label"
+        android:id="@+id/location_label"
+        android:layout_alignTop="@+id/locatioText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/locatioText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="@string/location_default"
+        android:inputType="text"
+        android:layout_toRightOf="@+id/location_label"
+        android:layout_toEndOf="@+id/location_label" />
+-->
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/location_label"
+            android:textColorLink="#000"
+            android:id="@+id/locationLabel"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:id="@+id/locationText"
+            android:text="@string/location_default"
+            android:inputType="text"
+            android:layout_toRightOf="@+id/locationLabel"
+            android:layout_toEndOf="@+id/locationLabel" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connectBtn"
+        android:id="@+id/connectBtn"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_toLeftOf="@+id/disconnectBtn"
+        android:layout_toStartOf="@+id/disconnectBtn"
+        android:enabled="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/disconnectBtn"
+        android:id="@+id/disconnectBtn"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:enabled="false"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/connectBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/destination_label"
+            android:id="@+id/destinationLabel"
+            android:textColor="#000"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:id="@+id/destinationText"
+            android:text="@string/destination_default"
+            android:inputType="text"
+            android:layout_toEndOf="@+id/destinationLabel"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subscribeBtn"
+        android:id="@+id/subscribeBtn"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_toLeftOf="@+id/unsubscribeBtn"
+        android:layout_toStartOf="@+id/unsubscribeBtn"
+        android:enabled="false"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unsubscribeBtn"
+        android:id="@+id/unsubscribeBtn"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:enabled="false"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subscribeBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/msg_label"
+            android:id="@+id/msgLabel"
+            android:textColor="#000"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:id="@+id/msgText"
+            android:text="@string/msg_default"
+            android:inputType="text"
+            android:layout_toEndOf="@+id/msgLabel"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_label"
+        android:id="@+id/sendBtn"
+        android:enabled="false"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_alignRight="@+id/linearLayout3"
+        android:layout_alignEnd="@+id/linearLayout3" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_binary_check_box_label"
+        android:id="@+id/sendBinaryCheckBox"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignBottom="@+id/sendBtn"
+        android:layout_alignLeft="@+id/linearLayout3"
+        android:layout_alignStart="@+id/linearLayout3" />
+
+    <LinearLayout
+        android:id="@+id/logContainer"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/sendBtn">
+
+        <TextView
+            android:id="@+id/logView"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@android:drawable/editbox_background"
+            android:scrollbars="horizontal|vertical"
+            android:textColor="#000000"
+            android:maxLines="80" />
+
+        <Button
+            android:id="@+id/clearBtn"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:text="@string/clear_label" />
+
+    </LinearLayout>
+
+</RelativeLayout>

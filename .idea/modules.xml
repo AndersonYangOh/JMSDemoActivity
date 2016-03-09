@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JMSDemoActivity.iml" filepath="$PROJECT_DIR$/JMSDemoActivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.kaazing.gateway.client.android/com.kaazing.gateway.client.android.iml" filepath="$PROJECT_DIR$/com.kaazing.gateway.client.android/com.kaazing.gateway.client.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.kaazing.gateway.jms.client.android/com.kaazing.gateway.jms.client.android.iml" filepath="$PROJECT_DIR$/com.kaazing.gateway.jms.client.android/com.kaazing.gateway.jms.client.android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/geronimo-jms_1.1_spec-1.1.1/geronimo-jms_1.1_spec-1.1.1.iml" filepath="$PROJECT_DIR$/geronimo-jms_1.1_spec-1.1.1/geronimo-jms_1.1_spec-1.1.1.iml" />
+    </modules>
+  </component>
+</project>

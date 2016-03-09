@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('com.kaazing.gateway.jms.client.android.jar'))

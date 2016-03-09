@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">JMS Messaging Demo</string>
+    <string name="location_label">Location</string>
+    <string name="location_default"></string>
+    <string name="connectBtn">Connect</string>
+    <string name="disconnectBtn">Disconnect</string>
+    <string name="destination_label">Destination</string>
+    <string name="destination_default">/topic/destination</string>
+    <string name="subscribeBtn">Subscribe</string>
+    <string name="unsubscribeBtn">Unsubscribe</string>
+    <string name="msg_label">Message</string>
+    <string name="msg_default"></string>
+    <string name="send_label">Send</string>
+    <string name="send_binary_check_box_label">Send Binary</string>
+    <string name="clear_label">Clear</string>
+</resources>

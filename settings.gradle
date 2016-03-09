@@ -1,0 +1,1 @@
+include ':app', ':com.kaazing.gateway.client.android', ':com.kaazing.gateway.jms.client.android', ':geronimo-jms_1.1_spec-1.1.1'
