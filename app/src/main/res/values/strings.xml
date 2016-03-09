@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">JMS Messaging Demo</string>
     <string name="location_label">Location</string>
-    <string name="location_default"></string>
+    <string name="location_default">ws://example1:8001/jms</string>
     <string name="connectBtn">Connect</string>
     <string name="disconnectBtn">Disconnect</string>
     <string name="destination_label">Destination</string>

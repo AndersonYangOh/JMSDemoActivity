@@ -26,4 +26,5 @@ dependencies {
     compile project(':com.kaazing.gateway.client.android')
     compile project(':com.kaazing.gateway.jms.client.android')
     compile project(':geronimo-jms_1.1_spec-1.1.1')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

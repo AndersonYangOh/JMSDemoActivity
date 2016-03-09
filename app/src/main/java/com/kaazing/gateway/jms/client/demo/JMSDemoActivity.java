@@ -1,5 +1,6 @@
 package com.kaazing.gateway.jms.client.demo;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -40,6 +41,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 // Include these statements with any client
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.kaazing.net.ws.WebSocketFactory; // WebSocket
 import com.kaazing.gateway.jms.client.JmsConnectionFactory; // JMS
 import com.kaazing.gateway.jms.client.ConnectionDisconnectedException; // Exceptions
@@ -55,7 +59,7 @@ import static com.kaazing.gateway.jms.client.JmsConnectionFactory.*;
 
 public class JMSDemoActivity extends AppCompatActivity {
 
-    private static String TAG ="com.kaazing.gateway.jms.client.demo";
+    private static String TAG = "com.kaazing.gateway.jms.client.demo";
 
     private Button connectBtn;
     private Button disconnectBtn;
@@ -77,6 +81,11 @@ public class JMSDemoActivity extends AppCompatActivity {
     private DispatchQueue dispatchQueue;
 
     private HashMap<String, ArrayDeque<MessageConsumer>> consumers = new HashMap<String, ArrayDeque<MessageConsumer>>();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,7 +117,7 @@ public class JMSDemoActivity extends AppCompatActivity {
                 webSocketFactory.setDefaultFollowRedirect(HttpRedirectPolicy.SAME_DOMAIN);
             } catch (JMSException e) {
                 e.printStackTrace();
-                logMessage("EXCEPTION" + e.getMessage());
+                logMessage("EXCEPTION 1" + e.getMessage());
             }
         }
 
@@ -121,7 +130,7 @@ public class JMSDemoActivity extends AppCompatActivity {
                 dispatchQueue.start();
                 dispatchQueue.waitUntilReady();
                 connect();
-                }
+            }
         });
 
         //Se intampla cand apasam butonul disconnect
@@ -143,22 +152,22 @@ public class JMSDemoActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        try{
+                        try {
                             Destination destination = getDestination(destinationName);
-                            if (destination == null){
+                            if (destination == null) {
                                 return;
                             }
                             MessageConsumer consumer = session.createConsumer(destination);
                             ArrayDeque<MessageConsumer> consumerToDestination = consumers.get(destinationName);
-                            if (consumerToDestination == null){
+                            if (consumerToDestination == null) {
                                 consumerToDestination = new ArrayDeque<MessageConsumer>();
                                 consumers.put(destinationName, consumerToDestination);
                             }
                             consumerToDestination.add(consumer);
                             consumer.setMessageListener(new DestinationMessageListener());
-                        } catch(JMSException e){
+                        } catch (JMSException e) {
                             e.printStackTrace();
-                            logMessage("EXCEPTION" + e.getMessage());
+                            logMessage("EXCEPTION 2" + e.getMessage());
                         }
                     }
                 });
@@ -173,21 +182,21 @@ public class JMSDemoActivity extends AppCompatActivity {
                 String destinationName = destinationText.getText().toString();
                 logMessage("UNSUBSCRIBE - " + destinationName);
                 ArrayDeque<MessageConsumer> consumerToDestination = consumers.get(destinationName);
-                if (consumerToDestination == null){
+                if (consumerToDestination == null) {
                     return;
                 }
                 final MessageConsumer consumer = consumerToDestination.poll();
-                if (consumer == null){
+                if (consumer == null) {
                     return;
                 }
                 dispatchQueue.dispatchAsync(new Runnable() {
                     @Override
                     public void run() {
-                        try{
+                        try {
                             consumer.close();
-                        } catch (JMSException e){
+                        } catch (JMSException e) {
                             e.printStackTrace();
-                            logMessage("EXCEPTION " + e.getMessage());
+                            logMessage("EXCEPTION 3" + e.getMessage());
                         }
                     }
                 });
@@ -205,23 +214,22 @@ public class JMSDemoActivity extends AppCompatActivity {
                 dispatchQueue.dispatchAsync(new Runnable() {
                     @Override
                     public void run() {
-                        try{
+                        try {
                             String destinationName = destinationText.getText().toString();
                             MessageProducer producer = session.createProducer(getDestination(destinationName));
                             Message message;
-                            if (sendBinary){
+                            if (sendBinary) {
                                 BytesMessage bytesMessage = session.createBytesMessage();
                                 bytesMessage.writeUTF(text);
                                 message = bytesMessage;
-                            }
-                            else {
+                            } else {
                                 message = session.createTextMessage(text);
                             }
                             producer.send(message);
                             producer.close();
-                        } catch (JMSException e){
+                        } catch (JMSException e) {
                             e.printStackTrace();
-                            logMessage("EXCEPTION " + e.getMessage());
+                            logMessage("EXCEPTION 4" + e.getMessage());
                         }
                     }
                 });
@@ -235,16 +243,19 @@ public class JMSDemoActivity extends AppCompatActivity {
                 logView.setText("");
             }
         });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    public void onPause(){
-        if (connection != null){
+    public void onPause() {
+        if (connection != null) {
             dispatchQueue.dispatchAsync(new Runnable() {
                 @Override
                 public void run() {
-                    try{
+                    try {
                         connection.stop();
-                    }catch (JMSException e){
+                    } catch (JMSException e) {
                         e.printStackTrace();
                     }
                 }
@@ -253,7 +264,7 @@ public class JMSDemoActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void onResume(){
+    public void onResume() {
         if (connection != null) {
             dispatchQueue.dispatchAsync(new Runnable() {
                 @Override
@@ -269,50 +280,50 @@ public class JMSDemoActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    public void onDestroy(){
-        if (connection != null){
+    public void onDestroy() {
+        if (connection != null) {
             disconnect();
         }
         super.onDestroy();
     }
 
-    private void connect(){
+    private void connect() {
         logMessage("CONNECTING");
         dispatchQueue.dispatchAsync(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     String location = locationText.getText().toString();
                     connectionFactory.setGatewayLocation(URI.create(location));
                     connection = connectionFactory.createConnection();
                     connection.start();
-                    session = connection.createSession(false,Session.AUTO_ACKNOWLEDGE);
+                    session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
                     logMessage("CONNECTED");
                     connection.setExceptionListener(new ConnectionExceptionListener());
                     updateButtonsForConnected();
-                }catch(Exception e){
+                } catch (Exception e) {
                     updateButtonsForDisconnected();
                     e.printStackTrace();
-                    logMessage("EXCEPTION " + e.getMessage());
+                    logMessage("EXCEPTION 5 " + e.getMessage());
                 }
             }
         });
     }
 
-    private void disconnect(){
+    private void disconnect() {
         logMessage("DISCONNECTING");
         dispatchQueue.removePendingJobs();
         dispatchQueue.quit();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     connection.close();
                     logMessage("DISCONNECTED");
-                }catch(JMSException e){
+                } catch (JMSException e) {
                     e.printStackTrace();
-                    logMessage("EXCEPTION " + e.getMessage());
-                }finally{
+                    logMessage("EXCEPTION 6" + e.getMessage());
+                } finally {
                     connection = null;
                     updateButtonsForDisconnected();
                 }
@@ -320,87 +331,126 @@ public class JMSDemoActivity extends AppCompatActivity {
         }).start();
     }
 
-    private Destination getDestination(String destinationName) throws JMSException{
+    private Destination getDestination(String destinationName) throws JMSException {
         Destination destination;
-        if(destinationName.startsWith("/topic/")){
-            destination=session.createTopic(destinationName);
-        }else if (destinationName.startsWith("/queue/")){
-            destination=session.createQueue(destinationName);
-        }
-        else{
+        if (destinationName.startsWith("/topic/")) {
+            destination = session.createTopic(destinationName);
+        } else if (destinationName.startsWith("/queue/")) {
+            destination = session.createQueue(destinationName);
+        } else {
             logMessage("INVALID DESTINATION NAME: " + destinationName);
             return null;
         }
         return destination;
     }
 
-    private class ConnectionExceptionListener implements ExceptionListener{
-        public void onException(final JMSException exception){
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "JMSDemo Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.kaazing.gateway.jms.client.demo/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "JMSDemo Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.kaazing.gateway.jms.client.demo/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
+    private class ConnectionExceptionListener implements ExceptionListener {
+        public void onException(final JMSException exception) {
             logMessage(exception.getMessage());
-            if (exception instanceof ConnectionDisconnectedException){
+            if (exception instanceof ConnectionDisconnectedException) {
                 updateButtonsForDisconnected();
             }
         }
     }
 
-    private class DestinationMessageListener implements MessageListener{
-        public void onMessage(Message message){
-            try{
-                if (message instanceof TextMessage){
-                    logMessage ("RECEIVED Message" + ((TextMessage)message).getText());
-                }else if(message instanceof BytesMessage){
-                    BytesMessage bytesMessage = (BytesMessage)message;
+    private class DestinationMessageListener implements MessageListener {
+        public void onMessage(Message message) {
+            try {
+                if (message instanceof TextMessage) {
+                    logMessage("RECEIVED Message" + ((TextMessage) message).getText());
+                } else if (message instanceof BytesMessage) {
+                    BytesMessage bytesMessage = (BytesMessage) message;
                     long len = bytesMessage.getBodyLength();
                     byte b[] = new byte[(int) len];
                     bytesMessage.readByte();
                     logMessage("RECEIVED Message " + hexDump(b));
-                }else if (message instanceof MapMessage){
+                } else if (message instanceof MapMessage) {
                     MapMessage mapMessage = (MapMessage) message;
                     Enumeration mapNames = mapMessage.getMapNames();
-                    while (mapNames.hasMoreElements()){
-                        String key = (String)mapNames.nextElement();
+                    while (mapNames.hasMoreElements()) {
+                        String key = (String) mapNames.nextElement();
                         Object value = mapMessage.getObject(key);
-                        if(value == null){
+                        if (value == null) {
                             logMessage(key + ": null");
-                        }else if (value instanceof byte[]){
-                            byte[] arr =(byte[])value;
+                        } else if (value instanceof byte[]) {
+                            byte[] arr = (byte[]) value;
                             StringBuilder s = new StringBuilder();
                             s.append("[");
-                            for (int i = 0; i <arr.length; i++){
-                                if (i > 0){
+                            for (int i = 0; i < arr.length; i++) {
+                                if (i > 0) {
                                     s.append(",");
                                 }
                                 s.append(arr[i]);
                             }
                             s.append("]");
                             logMessage(key + ": " + s.toString() + "(Byte[])");
-                        }else {
+                        } else {
                             logMessage(key + ": " + value.toString() + "(" + value.getClass().getSimpleName() + ")");
                         }
                     }
                     logMessage("RECEIVED MapMessage: ");
-                }else{
+                } else {
                     logMessage("UNKNOWN MESSAGE TYPE" + message.getClass().getSimpleName());
                 }
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
-                logMessage("EXCEPTION " + ex.getMessage());
+                logMessage("EXCEPTION 7" + ex.getMessage());
             }
         }
 
-        public String hexDump(byte[] b){
-            if (b.length == 0){
+        public String hexDump(byte[] b) {
+            if (b.length == 0) {
                 return "empty";
             }
             StringBuilder out = new StringBuilder();
-            for (int i=0; i < b.length; i++ ){
+            for (int i = 0; i < b.length; i++) {
                 out.append(Integer.toHexString(b[i])).append(" ");
             }
-            return  out.toString();
+            return out.toString();
         }
     }
 
-    private void updateButtonsForConnected(){
+    private void updateButtonsForConnected() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -413,7 +463,7 @@ public class JMSDemoActivity extends AppCompatActivity {
         });
     }
 
-    public void updateButtonsForDisconnected(){
+    public void updateButtonsForDisconnected() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -426,22 +476,18 @@ public class JMSDemoActivity extends AppCompatActivity {
         });
     }
 
-    private void logMessage(final String message){
+    private void logMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(logView.getLineCount() > 100){
+                if (logView.getLineCount() > 100) {
                     logView.setText(message);
-                }else{
+                } else {
                     logView.setText(message + "\n" + logView.getText());
                 }
             }
         });
     }
-
-
-
-
 
 
 }
