@@ -294,7 +294,9 @@ public class JMSDemoActivity extends AppCompatActivity {
             public void run() {
                 try {
                     String location = locationText.getText().toString();
+                    logMessage(location);
                     connectionFactory.setGatewayLocation(URI.create(location));
+
                     connection = connectionFactory.createConnection();
                     connection.start();
                     session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
